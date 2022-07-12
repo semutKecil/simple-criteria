@@ -234,7 +234,7 @@ class SimpleQuery<T> private constructor(
                     }
                     else -> {
                         when (field.type) {
-                            Int::class.java -> buildNumberPredicate(
+                            Int::class.java, Integer::class.java -> buildNumberPredicate(
                                 root.get(fd.fName!!),
                                 fd.o!!,
                                 fd.v!!.toInt(),
@@ -434,7 +434,7 @@ class SimpleQuery<T> private constructor(
             when (type) {
                 String::class.java -> root.get<String>(name)
                 Boolean::class.java -> root.get<Boolean>(name)
-                Int::class.java -> root.get<Int>(name)
+                Int::class.java, Integer::class.java -> root.get<Int>(name)
                 Float::class.java -> root.get<Float>(name)
                 Long::class.java -> root.get<Long>(name)
                 Double::class.java -> root.get<Double>(name)
