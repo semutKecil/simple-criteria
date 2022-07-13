@@ -83,6 +83,7 @@ class SimpleQuery<T> private constructor(
         }
 
         q.multiselect(*mapSelect.values.toTypedArray())
+
         val prList = filterDataList.mapNotNull { buildPredicateFromFilterData(r, it, mapJoinObj) }
         if (prList.isNotEmpty()) {
             q.where(cb.and(*prList.toTypedArray()))
@@ -129,6 +130,13 @@ class SimpleQuery<T> private constructor(
         val join = if (mapJoinObj.containsKey(key)) {
             mapJoinObj[key]
         } else {
+
+            if (key.contains(".")) {
+                val ks = key.split(".")
+                val rJoin = ks.take(ks.size - 1).joinToString(".")
+                getOrCreateJoin(r, rJoin, mapJoinObj)
+            }
+
             joins[key]?.let {
                 mapJoinObj[key] = JoinObj(it.clazz, it.joinFrom(r, mapJoinObj))
                 mapJoinObj[key]
