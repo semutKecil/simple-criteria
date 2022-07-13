@@ -240,19 +240,19 @@ class SimpleQuery<T> private constructor(
                                 fd.v!!.toInt(),
                                 cb
                             )
-                            Float::class.java -> buildNumberPredicate(
+                            Float::class.java, java.lang.Float::class.java -> buildNumberPredicate(
                                 root.get(fd.fName!!),
                                 fd.o!!,
                                 fd.v!!.toFloat(),
                                 cb
                             )
-                            Long::class.java -> buildNumberPredicate(
+                            Long::class.java, java.lang.Long::class.java -> buildNumberPredicate(
                                 root.get(fd.fName!!),
                                 fd.o!!,
                                 fd.v!!.toLong(),
                                 cb
                             )
-                            Double::class.java -> buildNumberPredicate(
+                            Double::class.java, java.lang.Double::class.java -> buildNumberPredicate(
                                 root.get(fd.fName!!),
                                 fd.o!!,
                                 fd.v!!.toDouble(),
@@ -435,9 +435,9 @@ class SimpleQuery<T> private constructor(
                 String::class.java -> root.get<String>(name)
                 Boolean::class.java -> root.get<Boolean>(name)
                 Int::class.java, Integer::class.java -> root.get<Int>(name)
-                Float::class.java -> root.get<Float>(name)
-                Long::class.java -> root.get<Long>(name)
-                Double::class.java -> root.get<Double>(name)
+                Float::class.java, java.lang.Float::class.java -> root.get<Float>(name)
+                Long::class.java, java.lang.Long::class.java -> root.get<Long>(name)
+                Double::class.java, java.lang.Double::class.java -> root.get<Double>(name)
                 LocalDateTime::class.java -> root.get<LocalDateTime>(name)
                 LocalDate::class.java -> root.get<LocalDate>(name)
                 LocalTime::class.java -> root.get<LocalDate>(name)
