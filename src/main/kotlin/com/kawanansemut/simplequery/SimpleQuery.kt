@@ -1,15 +1,15 @@
 package com.kawanansemut.simplequery
 
+import jakarta.persistence.EntityManager
+import jakarta.persistence.Tuple
+import jakarta.persistence.TypedQuery
+import jakarta.persistence.criteria.*
 import java.lang.reflect.Field
 import java.time.LocalDate
 import java.time.LocalDateTime
 import java.time.LocalTime
 import java.time.format.DateTimeFormatter
 import java.util.*
-import javax.persistence.EntityManager
-import javax.persistence.Tuple
-import javax.persistence.TypedQuery
-import javax.persistence.criteria.*
 
 class SimpleQuery<T> private constructor(
     private val entityManager: EntityManager, private val clazz: Class<T>,
@@ -511,7 +511,7 @@ class SimpleQuery<T> private constructor(
         }
 
         fun build(): SimpleQuery<T> {
-            return SimpleQuery<T>(em, clazz, select, joins, filterDataList, orderList)
+            return SimpleQuery(em, clazz, select, joins, filterDataList, orderList)
         }
     }
 }
