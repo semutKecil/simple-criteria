@@ -3,6 +3,7 @@ package com.kawanansemut.simplequery
 import com.fasterxml.jackson.module.kotlin.jacksonObjectMapper
 import java.io.Serializable
 
+
 class FilterData : Serializable {
     var fi: String? = null
     var v: String? = null
