@@ -4,11 +4,16 @@
     <option name="autoReloadType" value="SELECTIVE" />
   </component>
   <component name="ChangeListManager">
-    <list default="true" id="9a7b479d-6474-4dc1-9929-fae667616f01" name="Changes" comment="update dependency">
-      <change afterPath="$PROJECT_DIR$/src/main/kotlin/com/kawanansemut/simplequery/PredicateString.kt" afterDir="false" />
+    <list default="true" id="9a7b479d-6474-4dc1-9929-fae667616f01" name="Changes" comment="add string predicate for greater than and less than">
+      <change afterPath="$PROJECT_DIR$/.idea/kotlinc.xml" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/src/main/kotlin/com/kawanansemut/simplequery/PredicateUtility.kt" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/.idea/misc.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/misc.xml" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/kotlin/com/kawanansemut/simplequery/FilterData.kt" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/kotlin/com/kawanansemut/simplequery/FilterData.kt" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/src/main/kotlin/com/kawanansemut/simplequery/FilterDataBuilder.kt" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/kotlin/com/kawanansemut/simplequery/FilterDataBuilder.kt" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/main/kotlin/com/kawanansemut/simplequery/PredicateNumber.kt" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/kotlin/com/kawanansemut/simplequery/PredicateNumber.kt" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/kotlin/com/kawanansemut/simplequery/PredicateNumber.kt" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/kotlin/com/kawanansemut/simplequery/PredicateString.kt" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/kotlin/com/kawanansemut/simplequery/SimpleQuery.kt" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/kotlin/com/kawanansemut/simplequery/SimpleQuery.kt" afterDir="false" />
     </list>
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
@@ -87,7 +92,14 @@
       <option name="project" value="LOCAL" />
       <updated>1677348665036</updated>
     </task>
-    <option name="localTasksCounter" value="4" />
+    <task id="LOCAL-00004" summary="add string predicate for greater than and less than">
+      <created>1688296638156</created>
+      <option name="number" value="00004" />
+      <option name="presentableId" value="LOCAL-00004" />
+      <option name="project" value="LOCAL" />
+      <updated>1688296638156</updated>
+    </task>
+    <option name="localTasksCounter" value="5" />
     <servers />
   </component>
   <component name="Vcs.Log.Tabs.Properties">
@@ -105,21 +117,7 @@
     <MESSAGE value="initial commit" />
     <MESSAGE value="fix java lang integer not found in kotlin" />
     <MESSAGE value="update dependency" />
-    <option name="LAST_COMMIT_MESSAGE" value="update dependency" />
-  </component>
-  <component name="XDebuggerManager">
-    <breakpoint-manager>
-      <breakpoints>
-        <line-breakpoint enabled="true" type="kotlin-function">
-          <url>file://$PROJECT_DIR$/src/main/kotlin/com/kawanansemut/simplequery/SimpleQuery.kt</url>
-          <line>458</line>
-          <properties class="com.kawanansemut.simplequery.SimpleQuery.Builder">
-            <option name="EMULATED" value="true" />
-            <option name="WATCH_EXIT" value="false" />
-          </properties>
-          <option name="timeStamp" value="1" />
-        </line-breakpoint>
-      </breakpoints>
-    </breakpoint-manager>
+    <MESSAGE value="add string predicate for greater than and less than" />
+    <option name="LAST_COMMIT_MESSAGE" value="add string predicate for greater than and less than" />
   </component>
 </project>

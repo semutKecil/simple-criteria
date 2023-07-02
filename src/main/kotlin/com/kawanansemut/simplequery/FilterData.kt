@@ -18,18 +18,19 @@ class FilterData : Serializable {
                 this.o = FILTEROP.valueOf(value[1])
                 this.v = value[2]
 
-                this.vAr = when {
-                    value.size == 3 -> {
-                        arrayOf(value[2])
-                    }
-                    value.size > 3 -> {
-                        val sliceArray = value.sliceArray(2 until value.size)
-                        sliceArray
-                    }
-                    else -> {
-                        null
-                    }
-                }
+                this.vAr = value.sliceArray(2 until value.size)
+//                this.vAr = when {
+//                    value.size == 3 -> {
+//                        arrayOf(value[2])
+//                    }
+//                    value.size > 3 -> {
+//                        val sliceArray = value.sliceArray(2 until value.size)
+//                        sliceArray
+//                    }
+//                    else -> {
+//                        null
+//                    }
+//                }
             }
             field = value
         }
