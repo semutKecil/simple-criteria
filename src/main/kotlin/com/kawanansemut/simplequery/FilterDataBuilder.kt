@@ -253,6 +253,10 @@ class FilterDataBuilder<T>(private val fd: FilterData, private val cob: Class<T>
                         LocalDateTime::class.java -> buildLocalDatetimePredicate(fd, root, cb)
                         LocalDate::class.java -> buildLocalDatePredicate(fd, root, cb)
                         LocalTime::class.java -> buildLocalTimePredicate(fd, root, cb)
+                        String::class.java->PredicateString( root.get(fd.fi!!),
+                            fd.o!!,
+                            fd.v!!.toString(),
+                            cb).build()
                         else -> null
                     }
                 }

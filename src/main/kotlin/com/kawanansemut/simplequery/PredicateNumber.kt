@@ -3,14 +3,12 @@ package com.kawanansemut.simplequery
 import jakarta.persistence.criteria.CriteriaBuilder
 import jakarta.persistence.criteria.Expression
 import jakarta.persistence.criteria.Predicate
-import jakarta.persistence.criteria.Root
 
 class PredicateNumber<T : Number>(
     private val field: Expression<T>,
     private val operator: FilterData.FILTEROP,
     private val v: T,
     private val cb: CriteriaBuilder,
-//    private val root: Root<X>
 ) {
 
     fun build(): Predicate? {
@@ -27,3 +25,4 @@ class PredicateNumber<T : Number>(
         }
     }
 }
+
