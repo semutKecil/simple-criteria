@@ -5,9 +5,7 @@ import jakarta.persistence.criteria.Expression
 import jakarta.persistence.criteria.From
 import jakarta.persistence.criteria.Predicate
 import java.lang.reflect.Field
-import java.time.LocalDate
-import java.time.LocalDateTime
-import java.time.LocalTime
+import java.time.*
 import java.time.format.DateTimeFormatter
 import java.util.*
 
@@ -26,19 +24,6 @@ class PredicateUtility {
             Expression<Integer> second = cb.function("second", Integer.class, ts);
              */
 
-            val intDateExp = cb.sum(
-                cb.sum(
-                    cb.prod(cb.function("year", Integer::class.java, root.get<LocalDateTime>(fd.fi)), 10000),
-                    cb.prod(cb.function("month", Integer::class.java, root.get<LocalDateTime>(fd.fi)), 100)
-                ), cb.function("day", Integer::class.java, root.get<LocalDateTime>(fd.fi))
-            )
-            val intTimeExp = cb.sum(
-                cb.sum(
-                    cb.prod(cb.function("hour", Integer::class.java, root.get<LocalDateTime>(fd.fi)), 3600),
-                    cb.prod(cb.function("minute", Integer::class.java, root.get<LocalDateTime>(fd.fi)), 60)
-                ),
-                cb.function("second", Integer::class.java, root.get<LocalDateTime>(fd.fi))
-            )
 
             return when (fd.o!!) {
                 FilterData.FILTEROP.EQ -> cb.equal(
@@ -71,11 +56,37 @@ class PredicateUtility {
                     LocalDateTime.parse(fd.v!!, dateTimeFormatter)
                 )
 
-                FilterData.FILTEROP.EQD, FilterData.FILTEROP.LED, FilterData.FILTEROP.GED, FilterData.FILTEROP.LTD, FilterData.FILTEROP.GTD, FilterData.FILTEROP.NEQD -> numberPredicate(
-                    intDateExp, fd.o!!, fd.v!!.replace("-", "").toInt(), cb
-                )
+                FilterData.FILTEROP.EQD,
+                FilterData.FILTEROP.LED,
+                FilterData.FILTEROP.GED,
+                FilterData.FILTEROP.LTD,
+                FilterData.FILTEROP.GTD,
+                FilterData.FILTEROP.NEQD -> {
+                    val intDateExp = cb.sum(
+                        cb.sum(
+                            cb.prod(cb.function("year", Integer::class.java, root.get<LocalDateTime>(fd.fi)), 10000),
+                            cb.prod(cb.function("month", Integer::class.java, root.get<LocalDateTime>(fd.fi)), 100)
+                        ), cb.function("day", Integer::class.java, root.get<LocalDateTime>(fd.fi))
+                    )
+                    numberPredicate(
+                        intDateExp, fd.o!!, fd.v!!.replace("-", "").toInt(), cb
+                    )
+                }
 
-                FilterData.FILTEROP.EQT, FilterData.FILTEROP.LET, FilterData.FILTEROP.GET, FilterData.FILTEROP.LTT, FilterData.FILTEROP.GTT, FilterData.FILTEROP.NEQT -> {
+                FilterData.FILTEROP.EQT,
+                FilterData.FILTEROP.LET,
+                FilterData.FILTEROP.GET,
+                FilterData.FILTEROP.LTT,
+                FilterData.FILTEROP.GTT,
+                FilterData.FILTEROP.NEQT -> {
+                    val intTimeExp = cb.sum(
+                        cb.sum(
+                            cb.prod(cb.function("hour", Integer::class.java, root.get<LocalDateTime>(fd.fi)), 3600),
+                            cb.prod(cb.function("minute", Integer::class.java, root.get<LocalDateTime>(fd.fi)), 60)
+                        ),
+                        cb.function("second", Integer::class.java, root.get<LocalDateTime>(fd.fi))
+                    )
+
                     val stv = fd.v!!.split(':').map { it.toInt() }
                     val tVal = (stv[0] * 3600) + (stv[1] * 60) + stv[2]
                     numberPredicate(intTimeExp, fd.o!!, tVal, cb)
@@ -88,13 +99,6 @@ class PredicateUtility {
         }
 
         private fun localDatePredicate(fd: FilterData, root: From<*, *>, cb: CriteriaBuilder): Predicate? {
-            val intDateExp = cb.sum(
-                cb.sum(
-                    cb.prod(cb.function("year", Integer::class.java, root.get<LocalDate>(fd.fi)), 10000),
-                    cb.prod(cb.function("month", Integer::class.java, root.get<LocalDate>(fd.fi)), 100)
-                ), cb.function("day", Integer::class.java, root.get<LocalDate>(fd.fi))
-            )
-
             return when (fd.o!!) {
                 FilterData.FILTEROP.EQ -> cb.equal(
                     root.get<LocalDate>(fd.fi),
@@ -131,9 +135,17 @@ class PredicateUtility {
                 FilterData.FILTEROP.GED,
                 FilterData.FILTEROP.LTD,
                 FilterData.FILTEROP.GTD,
-                FilterData.FILTEROP.NEQD -> numberPredicate(
-                    intDateExp, fd.o!!, fd.v!!.replace("-", "").toInt(), cb
-                )
+                FilterData.FILTEROP.NEQD -> {
+                    val intDateExp = cb.sum(
+                        cb.sum(
+                            cb.prod(cb.function("year", Integer::class.java, root.get<LocalDate>(fd.fi)), 10000),
+                            cb.prod(cb.function("month", Integer::class.java, root.get<LocalDate>(fd.fi)), 100)
+                        ), cb.function("day", Integer::class.java, root.get<LocalDate>(fd.fi))
+                    )
+                    numberPredicate(
+                        intDateExp, fd.o!!, fd.v!!.replace("-", "").toInt(), cb
+                    )
+                }
 
                 FilterData.FILTEROP.ISNULL -> cb.isNull(root.get<LocalDate>(fd.fi))
                 FilterData.FILTEROP.ISNOTNULL -> cb.isNotNull(root.get<LocalDate>(fd.fi))
@@ -142,14 +154,6 @@ class PredicateUtility {
         }
 
         private fun localTimePredicate(fd: FilterData, root: From<*, *>, cb: CriteriaBuilder): Predicate? {
-            val intTimeExp = cb.sum(
-                cb.sum(
-                    cb.prod(cb.function("hour", Integer::class.java, root.get<LocalTime>(fd.fi)), 3600),
-                    cb.prod(cb.function("minute", Integer::class.java, root.get<LocalTime>(fd.fi)), 60)
-                ),
-                cb.function("second", Integer::class.java, root.get<LocalTime>(fd.fi))
-            )
-
             return when (fd.o!!) {
                 FilterData.FILTEROP.EQ -> cb.equal(
                     root.get<LocalTime>(fd.fi),
@@ -181,7 +185,20 @@ class PredicateUtility {
                     LocalTime.parse(fd.v!!, dateTimeFormatter)
                 )
 
-                FilterData.FILTEROP.EQT, FilterData.FILTEROP.LET, FilterData.FILTEROP.GET, FilterData.FILTEROP.LTT, FilterData.FILTEROP.GTT, FilterData.FILTEROP.NEQT -> {
+                FilterData.FILTEROP.EQT,
+                FilterData.FILTEROP.LET,
+                FilterData.FILTEROP.GET,
+                FilterData.FILTEROP.LTT,
+                FilterData.FILTEROP.GTT,
+                FilterData.FILTEROP.NEQT -> {
+                    val intTimeExp = cb.sum(
+                        cb.sum(
+                            cb.prod(cb.function("hour", Integer::class.java, root.get<LocalTime>(fd.fi)), 3600),
+                            cb.prod(cb.function("minute", Integer::class.java, root.get<LocalTime>(fd.fi)), 60)
+                        ),
+                        cb.function("second", Integer::class.java, root.get<LocalTime>(fd.fi))
+                    )
+
                     val stv = fd.v!!.split(':').map { it.toInt() }
                     val tVal = (stv[0] * 3600) + (stv[1] * 60) + stv[2]
                     numberPredicate(intTimeExp, fd.o!!, tVal, cb)
