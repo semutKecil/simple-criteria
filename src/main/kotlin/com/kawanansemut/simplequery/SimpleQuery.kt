@@ -210,7 +210,7 @@ class SimpleQuery<T> private constructor(
         private val orderList = mutableListOf<QueryOrder>()
 
         fun select(vararg column: String) = apply {
-            this.select.addAll(column.filter { select.any { s -> s == it } })
+            this.select.addAll(column.filter { select.any { s -> s != it } })
         }
 
         fun <X> addJoin(
