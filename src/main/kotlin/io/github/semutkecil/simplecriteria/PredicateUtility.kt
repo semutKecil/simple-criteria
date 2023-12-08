@@ -1,4 +1,4 @@
-package com.github.semutkecil.simplecriteria
+package io.github.semutkecil.simplecriteria
 
 import jakarta.persistence.criteria.CriteriaBuilder
 import jakarta.persistence.criteria.Expression

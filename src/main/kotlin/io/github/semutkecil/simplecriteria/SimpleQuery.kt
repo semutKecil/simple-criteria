@@ -1,4 +1,4 @@
-package com.github.semutkecil.simplecriteria
+package io.github.semutkecil.simplecriteria
 
 import jakarta.persistence.EntityManager
 import jakarta.persistence.Tuple

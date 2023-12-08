@@ -1,4 +1,4 @@
-package com.github.semutkecil.simplecriteria
+package io.github.semutkecil.simplecriteria
 
 fun main(args: Array<String>) {
     println("Hello World!")

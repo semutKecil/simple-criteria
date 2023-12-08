@@ -4,17 +4,18 @@
     <option name="autoReloadType" value="SELECTIVE" />
   </component>
   <component name="ChangeListManager">
-    <list default="true" id="9a7b479d-6474-4dc1-9929-fae667616f01" name="Changes" comment="add job to change version based on tag release">
+    <list default="true" id="9a7b479d-6474-4dc1-9929-fae667616f01" name="Changes" comment="change to io.github">
+      <change beforePath="$PROJECT_DIR$/.github/workflows/maven-publish.yml" beforeDir="false" afterPath="$PROJECT_DIR$/.github/workflows/maven-publish.yml" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/pom.xml" beforeDir="false" afterPath="$PROJECT_DIR$/pom.xml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/main/kotlin/com/kawanansemut/simplequery/FilterData.kt" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/kotlin/com/github/semutkecil/simplecriteria/FilterData.kt" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/main/kotlin/com/kawanansemut/simplequery/FilterDataBuilder.kt" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/kotlin/com/github/semutkecil/simplecriteria/FilterDataBuilder.kt" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/main/kotlin/com/kawanansemut/simplequery/JoinData.kt" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/kotlin/com/github/semutkecil/simplecriteria/JoinData.kt" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/main/kotlin/com/kawanansemut/simplequery/JoinObj.kt" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/kotlin/com/github/semutkecil/simplecriteria/JoinObj.kt" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/main/kotlin/com/kawanansemut/simplequery/Main.kt" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/kotlin/com/github/semutkecil/simplecriteria/Main.kt" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/main/kotlin/com/kawanansemut/simplequery/PredicateUtility.kt" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/kotlin/com/github/semutkecil/simplecriteria/PredicateUtility.kt" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/main/kotlin/com/kawanansemut/simplequery/QueryOrder.kt" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/kotlin/com/github/semutkecil/simplecriteria/QueryOrder.kt" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/main/kotlin/com/kawanansemut/simplequery/SimpleQuery.kt" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/kotlin/com/github/semutkecil/simplecriteria/SimpleQuery.kt" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/kotlin/com/github/semutkecil/simplecriteria/FilterData.kt" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/kotlin/io/github/semutkecil/simplecriteria/FilterData.kt" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/kotlin/com/github/semutkecil/simplecriteria/FilterDataBuilder.kt" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/kotlin/io/github/semutkecil/simplecriteria/FilterDataBuilder.kt" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/kotlin/com/github/semutkecil/simplecriteria/JoinData.kt" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/kotlin/io/github/semutkecil/simplecriteria/JoinData.kt" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/kotlin/com/github/semutkecil/simplecriteria/JoinObj.kt" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/kotlin/io/github/semutkecil/simplecriteria/JoinObj.kt" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/kotlin/com/github/semutkecil/simplecriteria/Main.kt" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/kotlin/io/github/semutkecil/simplecriteria/Main.kt" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/kotlin/com/github/semutkecil/simplecriteria/PredicateUtility.kt" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/kotlin/io/github/semutkecil/simplecriteria/PredicateUtility.kt" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/kotlin/com/github/semutkecil/simplecriteria/QueryOrder.kt" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/kotlin/io/github/semutkecil/simplecriteria/QueryOrder.kt" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/kotlin/com/github/semutkecil/simplecriteria/SimpleQuery.kt" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/kotlin/io/github/semutkecil/simplecriteria/SimpleQuery.kt" afterDir="false" />
     </list>
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
@@ -156,7 +157,14 @@
       <option name="project" value="LOCAL" />
       <updated>1702006773440</updated>
     </task>
-    <option name="localTasksCounter" value="13" />
+    <task id="LOCAL-00013" summary="update package group and artifact id to release to maven central">
+      <created>1702008941027</created>
+      <option name="number" value="00013" />
+      <option name="presentableId" value="LOCAL-00013" />
+      <option name="project" value="LOCAL" />
+      <updated>1702008941027</updated>
+    </task>
+    <option name="localTasksCounter" value="14" />
     <servers />
   </component>
   <component name="Vcs.Log.Tabs.Properties">
@@ -181,6 +189,8 @@
     <MESSAGE value="change github secret" />
     <MESSAGE value="update maven plugin" />
     <MESSAGE value="add job to change version based on tag release" />
-    <option name="LAST_COMMIT_MESSAGE" value="add job to change version based on tag release" />
+    <MESSAGE value="update package group and artifact id to release to maven central" />
+    <MESSAGE value="change to io.github" />
+    <option name="LAST_COMMIT_MESSAGE" value="change to io.github" />
   </component>
 </project>
