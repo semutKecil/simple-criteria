@@ -1,4 +1,4 @@
-package com.kawanansemut.simplequery
+package com.github.semutkecil.simplecriteria
 
 import jakarta.persistence.criteria.From
 

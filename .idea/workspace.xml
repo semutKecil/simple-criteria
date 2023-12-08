@@ -4,7 +4,18 @@
     <option name="autoReloadType" value="SELECTIVE" />
   </component>
   <component name="ChangeListManager">
-    <list default="true" id="9a7b479d-6474-4dc1-9929-fae667616f01" name="Changes" comment="prevent duplicate select column" />
+    <list default="true" id="9a7b479d-6474-4dc1-9929-fae667616f01" name="Changes" comment="add job to change version based on tag release">
+      <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/pom.xml" beforeDir="false" afterPath="$PROJECT_DIR$/pom.xml" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/kotlin/com/kawanansemut/simplequery/FilterData.kt" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/kotlin/com/github/semutkecil/simplecriteria/FilterData.kt" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/kotlin/com/kawanansemut/simplequery/FilterDataBuilder.kt" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/kotlin/com/github/semutkecil/simplecriteria/FilterDataBuilder.kt" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/kotlin/com/kawanansemut/simplequery/JoinData.kt" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/kotlin/com/github/semutkecil/simplecriteria/JoinData.kt" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/kotlin/com/kawanansemut/simplequery/JoinObj.kt" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/kotlin/com/github/semutkecil/simplecriteria/JoinObj.kt" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/kotlin/com/kawanansemut/simplequery/Main.kt" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/kotlin/com/github/semutkecil/simplecriteria/Main.kt" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/kotlin/com/kawanansemut/simplequery/PredicateUtility.kt" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/kotlin/com/github/semutkecil/simplecriteria/PredicateUtility.kt" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/kotlin/com/kawanansemut/simplequery/QueryOrder.kt" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/kotlin/com/github/semutkecil/simplecriteria/QueryOrder.kt" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/kotlin/com/kawanansemut/simplequery/SimpleQuery.kt" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/kotlin/com/github/semutkecil/simplecriteria/SimpleQuery.kt" afterDir="false" />
+    </list>
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
     <option name="HIGHLIGHT_NON_ACTIVE_CHANGELIST" value="false" />
@@ -110,7 +121,42 @@
       <option name="project" value="LOCAL" />
       <updated>1688455976171</updated>
     </task>
-    <option name="localTasksCounter" value="8" />
+    <task id="LOCAL-00008" summary="add distribution management">
+      <created>1702002790046</created>
+      <option name="number" value="00008" />
+      <option name="presentableId" value="LOCAL-00008" />
+      <option name="project" value="LOCAL" />
+      <updated>1702002790046</updated>
+    </task>
+    <task id="LOCAL-00009" summary="change github secret">
+      <created>1702003235419</created>
+      <option name="number" value="00009" />
+      <option name="presentableId" value="LOCAL-00009" />
+      <option name="project" value="LOCAL" />
+      <updated>1702003235419</updated>
+    </task>
+    <task id="LOCAL-00010" summary="update maven plugin">
+      <created>1702004850787</created>
+      <option name="number" value="00010" />
+      <option name="presentableId" value="LOCAL-00010" />
+      <option name="project" value="LOCAL" />
+      <updated>1702004850787</updated>
+    </task>
+    <task id="LOCAL-00011" summary="update maven plugin">
+      <created>1702005737180</created>
+      <option name="number" value="00011" />
+      <option name="presentableId" value="LOCAL-00011" />
+      <option name="project" value="LOCAL" />
+      <updated>1702005737180</updated>
+    </task>
+    <task id="LOCAL-00012" summary="add job to change version based on tag release">
+      <created>1702006773440</created>
+      <option name="number" value="00012" />
+      <option name="presentableId" value="LOCAL-00012" />
+      <option name="project" value="LOCAL" />
+      <updated>1702006773440</updated>
+    </task>
+    <option name="localTasksCounter" value="13" />
     <servers />
   </component>
   <component name="Vcs.Log.Tabs.Properties">
@@ -131,6 +177,10 @@
     <MESSAGE value="add string predicate for greater than and less than" />
     <MESSAGE value="merge predicate builder" />
     <MESSAGE value="prevent duplicate select column" />
-    <option name="LAST_COMMIT_MESSAGE" value="prevent duplicate select column" />
+    <MESSAGE value="add distribution management" />
+    <MESSAGE value="change github secret" />
+    <MESSAGE value="update maven plugin" />
+    <MESSAGE value="add job to change version based on tag release" />
+    <option name="LAST_COMMIT_MESSAGE" value="add job to change version based on tag release" />
   </component>
 </project>

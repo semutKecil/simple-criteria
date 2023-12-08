@@ -1,4 +1,4 @@
-package com.kawanansemut.simplequery
+package com.github.semutkecil.simplecriteria
 
 import com.fasterxml.jackson.module.kotlin.jacksonObjectMapper
 import java.io.Serializable
