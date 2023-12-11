@@ -4,12 +4,7 @@
     <option name="autoReloadType" value="SELECTIVE" />
   </component>
   <component name="ChangeListManager">
-    <list default="true" id="9a7b479d-6474-4dc1-9929-fae667616f01" name="Changes" comment="update deploy to ossrh">
-      <change afterPath="$PROJECT_DIR$/settings.xml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/.github/workflows/maven-publish.yml" beforeDir="false" afterPath="$PROJECT_DIR$/.github/workflows/maven-publish.yml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/pom.xml" beforeDir="false" afterPath="$PROJECT_DIR$/pom.xml" afterDir="false" />
-    </list>
+    <list default="true" id="9a7b479d-6474-4dc1-9929-fae667616f01" name="Changes" comment="update gpg for ossrh" />
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
     <option name="HIGHLIGHT_NON_ACTIVE_CHANGELIST" value="false" />
@@ -171,7 +166,21 @@
       <option name="project" value="LOCAL" />
       <updated>1702016008500</updated>
     </task>
-    <option name="localTasksCounter" value="16" />
+    <task id="LOCAL-00016" summary="update gpg for ossrh">
+      <created>1702260232359</created>
+      <option name="number" value="00016" />
+      <option name="presentableId" value="LOCAL-00016" />
+      <option name="project" value="LOCAL" />
+      <updated>1702260232359</updated>
+    </task>
+    <task id="LOCAL-00017" summary="update gpg for ossrh">
+      <created>1702260307527</created>
+      <option name="number" value="00017" />
+      <option name="presentableId" value="LOCAL-00017" />
+      <option name="project" value="LOCAL" />
+      <updated>1702260307527</updated>
+    </task>
+    <option name="localTasksCounter" value="18" />
     <servers />
   </component>
   <component name="Vcs.Log.Tabs.Properties">
@@ -199,6 +208,7 @@
     <MESSAGE value="update package group and artifact id to release to maven central" />
     <MESSAGE value="change to io.github" />
     <MESSAGE value="update deploy to ossrh" />
-    <option name="LAST_COMMIT_MESSAGE" value="update deploy to ossrh" />
+    <MESSAGE value="update gpg for ossrh" />
+    <option name="LAST_COMMIT_MESSAGE" value="update gpg for ossrh" />
   </component>
 </project>
