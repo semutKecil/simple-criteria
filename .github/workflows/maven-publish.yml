@@ -34,6 +34,8 @@ jobs:
 
       - name: Step 4 - Update version in pom.xml (Release only)
         run: mvn -B versions:set -DnewVersion=${{ github.event.release.tag_name }} -DgenerateBackupPoms=false
+        env:
+          GPG_PASSPHRASE: ${{ secrets.GPG_PASSPHRASE }}
 
       - name: Step 5 - Publish package
         run: mvn --batch-mode deploy
