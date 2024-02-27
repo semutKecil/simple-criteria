@@ -311,7 +311,8 @@ class SimpleQuery<T> private constructor(
 
         fun build(): SimpleQuery<T> {
             select.filter { it.contains(".") }.forEach {
-                addJoin(it)
+                val jSplit = it.split(".")
+                addJoin(jSplit.take(jSplit.size - 1).joinToString("."))
             }
 
 //            select.filter { it.contains(".") }.map { it.split(".") }.groupBy { it[0] }.forEach {
