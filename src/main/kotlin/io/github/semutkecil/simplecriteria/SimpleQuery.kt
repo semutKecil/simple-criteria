@@ -210,8 +210,9 @@ class SimpleQuery<T> private constructor(
         private val orderList = mutableListOf<QueryOrder>()
 
         fun select(vararg column: String) = apply {
-            this.select.addAll(column.filter { !select.contains(it)})
+            this.select.addAll(column.filter { !select.contains(it) })
         }
+
 
         fun <X> addJoin(
             name: String,
@@ -220,6 +221,55 @@ class SimpleQuery<T> private constructor(
         ) = apply {
             joins[name] = JoinData(clazz, join)
         }
+
+        fun <X, Y> addJoinLv1(
+            name: String,
+            clazzParent: Class<X>,
+            clazzJoin: Class<Y>
+        ) = apply {
+            addJoin(name, clazzParent) { r, _ ->
+                r.join<X, Y>(name, JoinType.LEFT)
+            }
+        }
+
+        fun <X, Y> addJoinLvUp(
+            name: String,
+            clazzParent: Class<X>,
+            clazzJoin: Class<Y>
+        ) = apply {
+            addJoin(name, clazzParent) { r, m ->
+                val nameSplit = name.split(".")
+                m[nameSplit.take(nameSplit.size - 1).joinToString(".")]?.join?.join<X, Y>(
+                    nameSplit.last(),
+                    JoinType.LEFT
+                )
+                    ?: throw Exception("join not found")
+            }
+        }
+
+        fun addJoin(name: String) {
+            val splName = name.split(".")
+            var parentClass: Class<*> = clazz
+            var childClass: Class<*>
+            var joinName = ""
+            splName.forEachIndexed { i, fn ->
+                if (joinName == "") {
+                    joinName = fn
+                } else {
+                    joinName += ".$fn"
+                }
+                childClass = parentClass.getDeclaredField(fn).type
+                if (joins[joinName] == null) {
+                    if (i == 0) {
+                        addJoinLv1(joinName, parentClass, childClass)
+                    } else {
+                        addJoinLvUp(joinName, parentClass, childClass)
+                    }
+                }
+                parentClass = childClass
+            }
+        }
+
 
         fun addSpringUrlSort(sort: Array<String>) {
             sort.forEachIndexed { idx, v ->
@@ -260,6 +310,20 @@ class SimpleQuery<T> private constructor(
         }
 
         fun build(): SimpleQuery<T> {
+            select.filter { it.contains(".") }.forEach {
+                addJoin(it)
+            }
+
+//            select.filter { it.contains(".") }.map { it.split(".") }.groupBy { it[0] }.forEach {
+//
+//                val joinField = entity.getDeclaredField(it.key)
+//                joinBuilder(qbb, it.key, entity, joinField.type)
+//            }
+//            select.filter { it.contains(".") }.map { it.split(".") }.groupBy { it[0] }.forEach {
+//                val joinField = entity.getDeclaredField(it.key)
+//                joinBuilder(qbb, it.key, entity, joinField.type)
+//            }
+
             return SimpleQuery(em, clazz, select, joins, filterDataList, orderList)
         }
     }
