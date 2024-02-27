@@ -44,8 +44,8 @@ class FilterData : Serializable {
     }
 
     fun flattenField(): List<String> {
-        return if (this.fName != null) {
-            listOf(fName!!)
+        return if (this.fi != null) {
+            listOf(fi!!)
         } else if (this.and != null) {
             this.and!!.map { it.flattenField() }.flatten().distinct()
         } else {
