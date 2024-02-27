@@ -222,7 +222,7 @@ class SimpleQuery<T> private constructor(
             joins[name] = JoinData(clazz, join)
         }
 
-        fun <X, Y> addJoinLv1(
+        private fun <X, Y> addJoinLv1(
             name: String,
             clazzParent: Class<X>,
             clazzJoin: Class<Y>
@@ -233,7 +233,7 @@ class SimpleQuery<T> private constructor(
             }
         }
 
-        fun <X, Y> addJoinLvUp(
+        private fun <X, Y> addJoinLvUp(
             name: String,
             clazzParent: Class<X>,
             clazzJoin: Class<Y>
@@ -249,11 +249,8 @@ class SimpleQuery<T> private constructor(
             }
         }
 
-        fun addJoin(name: String) {
-            println("addjoin $name")
-            val splName = name.split(".")
+        private fun addJoin(splName: List<String>) {
             var parentClass: Class<*> = clazz
-            var childClass: Class<*>
             var joinName = ""
             splName.forEachIndexed { i, fn ->
                 if (joinName == "") {
@@ -262,7 +259,7 @@ class SimpleQuery<T> private constructor(
                     joinName += ".$fn"
                 }
                 println("join name $joinName")
-                childClass = parentClass.getDeclaredField(fn).type
+                val childClass = parentClass.getDeclaredField(fn).type
                 println("child name ${childClass.name}")
                 if (joins[joinName] == null) {
                     if (i == 0) {
@@ -319,7 +316,21 @@ class SimpleQuery<T> private constructor(
         fun build(): SimpleQuery<T> {
             select.filter { it.contains(".") }.forEach {
                 val jSplit = it.split(".")
-                addJoin(jSplit.take(jSplit.size - 1).joinToString("."))
+                addJoin(jSplit.take(jSplit.size - 1))
+            }
+
+            orderList.map { it.fieldName }.filter { it.contains(".") }.forEach {
+                val jSplit = it.split(".")
+                addJoin(jSplit.take(jSplit.size - 1))
+            }
+
+            filterDataList.forEach { f ->
+                val flattenF = f.flattenField()
+                println("flat filter ${flattenF.joinToString(",")}")
+                flattenF.filter { it.contains(".") }.forEach {
+                    val jSplit = it.split(".")
+                    addJoin(jSplit.take(jSplit.size - 1))
+                }
             }
 
 //            select.filter { it.contains(".") }.map { it.split(".") }.groupBy { it[0] }.forEach {

@@ -43,6 +43,16 @@ class FilterData : Serializable {
         return jsonMapper.writeValueAsString(this)
     }
 
+    fun flattenField(): List<String> {
+        return if (this.fName != null) {
+            listOf(fName!!)
+        } else if (this.and != null) {
+            this.and!!.map { it.flattenField() }.flatten().distinct()
+        } else {
+            this.or!!.map { it.flattenField() }.flatten().distinct()
+        }
+    }
+
     companion object {
         fun fromJson(json: String): FilterData {
             val jsonMapper = jacksonObjectMapper()
