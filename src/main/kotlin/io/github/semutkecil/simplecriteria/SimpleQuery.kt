@@ -227,6 +227,7 @@ class SimpleQuery<T> private constructor(
             clazzParent: Class<X>,
             clazzJoin: Class<Y>
         ) = apply {
+            println("join name $name")
             addJoin(name, clazzParent) { r, _ ->
                 r.join<X, Y>(name, JoinType.LEFT)
             }
@@ -237,6 +238,7 @@ class SimpleQuery<T> private constructor(
             clazzParent: Class<X>,
             clazzJoin: Class<Y>
         ) = apply {
+            println("join name $name")
             addJoin(name, clazzParent) { r, m ->
                 val nameSplit = name.split(".")
                 m[nameSplit.take(nameSplit.size - 1).joinToString(".")]?.join?.join<X, Y>(
@@ -248,6 +250,7 @@ class SimpleQuery<T> private constructor(
         }
 
         fun addJoin(name: String) {
+            println("addjoin $name")
             val splName = name.split(".")
             var parentClass: Class<*> = clazz
             var childClass: Class<*>
@@ -258,11 +261,15 @@ class SimpleQuery<T> private constructor(
                 } else {
                     joinName += ".$fn"
                 }
+                println("join name $joinName")
                 childClass = parentClass.getDeclaredField(fn).type
+                println("child name ${childClass.name}")
                 if (joins[joinName] == null) {
                     if (i == 0) {
+                        println("lv1")
                         addJoinLv1(joinName, parentClass, childClass)
                     } else {
+                        println("lv1 up")
                         addJoinLvUp(joinName, parentClass, childClass)
                     }
                 }
