@@ -228,7 +228,7 @@ class SimpleQuery<T> private constructor(
             clazzJoin: Class<Y>
         ) = apply {
             println("join name $name")
-            addJoin(name, clazzParent) { r, _ ->
+            addJoin(name, clazzJoin) { r, _ ->
                 r.join<X, Y>(name, JoinType.LEFT)
             }
         }
@@ -239,7 +239,7 @@ class SimpleQuery<T> private constructor(
             clazzJoin: Class<Y>
         ) = apply {
             println("join name $name")
-            addJoin(name, clazzParent) { r, m ->
+            addJoin(name, clazzJoin) { _, m ->
                 val nameSplit = name.split(".")
                 m[nameSplit.take(nameSplit.size - 1).joinToString(".")]?.join?.join<X, Y>(
                     nameSplit.last(),
