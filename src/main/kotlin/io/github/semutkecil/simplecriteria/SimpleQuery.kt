@@ -5,6 +5,7 @@ import jakarta.persistence.Tuple
 import jakarta.persistence.TypedQuery
 import jakarta.persistence.criteria.*
 import java.lang.reflect.Field
+import java.lang.reflect.ParameterizedType
 import java.time.LocalDate
 import java.time.LocalDateTime
 import java.time.LocalTime
@@ -259,7 +260,13 @@ class SimpleQuery<T> private constructor(
                     joinName += ".$fn"
                 }
                 println("join name $joinName")
-                val childClass = parentClass.getDeclaredField(fn).type
+
+                var childClass = parentClass.getDeclaredField(fn).type
+                if (MutableCollection::class.java.isAssignableFrom(childClass)) {
+                    val fieldType = parentClass.getDeclaredField(fn).genericType as ParameterizedType
+                    childClass = fieldType.actualTypeArguments[0] as Class<*>
+                }
+
                 println("child name ${childClass.name}")
                 if (joins[joinName] == null) {
                     if (i == 0) {
