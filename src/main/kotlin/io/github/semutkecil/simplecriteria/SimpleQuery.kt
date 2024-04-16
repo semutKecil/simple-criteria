@@ -228,7 +228,6 @@ class SimpleQuery<T> private constructor(
             clazzParent: Class<X>,
             clazzJoin: Class<Y>
         ) = apply {
-            println("join name $name")
             addJoin(name, clazzJoin) { r, _ ->
                 r.join<X, Y>(name, JoinType.LEFT)
             }
@@ -239,7 +238,6 @@ class SimpleQuery<T> private constructor(
             clazzParent: Class<X>,
             clazzJoin: Class<Y>
         ) = apply {
-            println("join name $name")
             addJoin(name, clazzJoin) { _, m ->
                 val nameSplit = name.split(".")
                 m[nameSplit.take(nameSplit.size - 1).joinToString(".")]?.join?.join<X, Y>(
@@ -259,7 +257,6 @@ class SimpleQuery<T> private constructor(
                 } else {
                     joinName += ".$fn"
                 }
-                println("join name $joinName")
 
                 var childClass = parentClass.getDeclaredField(fn).type
                 if (MutableCollection::class.java.isAssignableFrom(childClass)) {
@@ -267,13 +264,10 @@ class SimpleQuery<T> private constructor(
                     childClass = fieldType.actualTypeArguments[0] as Class<*>
                 }
 
-                println("child name ${childClass.name}")
                 if (joins[joinName] == null) {
                     if (i == 0) {
-                        println("lv1")
                         addJoinLv1(joinName, parentClass, childClass)
                     } else {
-                        println("lv1 up")
                         addJoinLvUp(joinName, parentClass, childClass)
                     }
                 }
@@ -333,7 +327,6 @@ class SimpleQuery<T> private constructor(
 
             filterDataList.forEach { f ->
                 val flattenF = f.flattenField()
-                println("flat filter ${flattenF.joinToString(",")}")
                 flattenF.filter { it.contains(".") }.forEach {
                     val jSplit = it.split(".")
                     addJoin(jSplit.take(jSplit.size - 1))
