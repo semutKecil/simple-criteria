@@ -31,11 +31,11 @@ class SimpleQuery<T> private constructor(
     private fun collectEntityField(entityClass: Class<T>): MutableList<Field> {
         val listFields = mutableListOf<Field>()
         listFields.addAll(entityClass.declaredFields.toList())
-        var parent: Class<in T> = entityClass;
+        var parent: Class<in T> = entityClass
         var hasChild = true;
         while (hasChild) {
             try {
-                parent = entityClass.superclass
+                parent = parent.superclass
                 listFields.addAll(parent.declaredFields.toList())
             } catch (e: Exception) {
                 hasChild = false
