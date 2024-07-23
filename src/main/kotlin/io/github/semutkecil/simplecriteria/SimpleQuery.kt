@@ -11,24 +11,38 @@ import java.time.LocalDateTime
 import java.time.LocalTime
 
 class SimpleQuery<T> private constructor(
-    private val entityManager: EntityManager, private val clazz: Class<T>,
+    private val entityManager: EntityManager,
+    private val clazz: Class<T>,
     private val select: List<String>,
     private val joins: Map<String, JoinData<*>>,
     private val filterDataList: MutableList<FilterData>,
     private val orderList: MutableList<QueryOrder>
 ) {
     private val cb: CriteriaBuilder = entityManager.criteriaBuilder
-    private val fields = clazz.declaredFields.toMutableList()
+    private val fields = collectEntityField(clazz)
     private val mapSelect = mutableMapOf<String, Path<out Any>>()
 
     enum class DIR { ASC, DESC }
 
-    init {
-        fields.addAll(clazz.superclass.declaredFields.toMutableList())
-    }
-
     fun createQuery(): TypedQuery<Tuple> {
         return entityManager.createQuery(applyQuery())
+    }
+
+    private fun collectEntityField(entityClass: Class<T>): MutableList<Field> {
+        val listFields = mutableListOf<Field>()
+        listFields.addAll(entityClass.declaredFields.toList())
+        var parent: Class<in T> = entityClass;
+        var hasChild = true;
+        while (hasChild) {
+            try {
+                parent = entityClass.superclass
+                listFields.addAll(parent.declaredFields.toList())
+            } catch (e: Exception) {
+                hasChild = false
+            }
+        }
+
+        return listFields;
     }
 
     fun count(): Long {
@@ -214,7 +228,6 @@ class SimpleQuery<T> private constructor(
             this.select.addAll(column.filter { !select.contains(it) })
         }
 
-
         fun <X> addJoin(
             name: String,
             clazz: Class<X>,
@@ -332,16 +345,6 @@ class SimpleQuery<T> private constructor(
                     addJoin(jSplit.take(jSplit.size - 1))
                 }
             }
-
-//            select.filter { it.contains(".") }.map { it.split(".") }.groupBy { it[0] }.forEach {
-//
-//                val joinField = entity.getDeclaredField(it.key)
-//                joinBuilder(qbb, it.key, entity, joinField.type)
-//            }
-//            select.filter { it.contains(".") }.map { it.split(".") }.groupBy { it[0] }.forEach {
-//                val joinField = entity.getDeclaredField(it.key)
-//                joinBuilder(qbb, it.key, entity, joinField.type)
-//            }
 
             return SimpleQuery(em, clazz, select, joins, filterDataList, orderList)
         }
