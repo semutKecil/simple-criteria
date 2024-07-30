@@ -4,13 +4,8 @@
     <option name="autoReloadType" value="SELECTIVE" />
   </component>
   <component name="ChangeListManager">
-    <list default="true" id="9a7b479d-6474-4dc1-9929-fae667616f01" name="Changes" comment="clean debug print ln">
-      <change afterPath="$PROJECT_DIR$/src/main/kotlin/io/github/semutkecil/simplecriteria/CacheKey.kt" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/src/main/kotlin/io/github/semutkecil/simplecriteria/DataCache.kt" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
+    <list default="true" id="9a7b479d-6474-4dc1-9929-fae667616f01" name="Changes" comment="add recursive join and simple cache">
       <change beforePath="$PROJECT_DIR$/pom.xml" beforeDir="false" afterPath="$PROJECT_DIR$/pom.xml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/main/kotlin/io/github/semutkecil/simplecriteria/QueryOrder.kt" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/kotlin/io/github/semutkecil/simplecriteria/QueryOrder.kt" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/main/kotlin/io/github/semutkecil/simplecriteria/SimpleQuery.kt" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/kotlin/io/github/semutkecil/simplecriteria/SimpleQuery.kt" afterDir="false" />
     </list>
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
@@ -319,7 +314,15 @@
       <option name="project" value="LOCAL" />
       <updated>1713230147378</updated>
     </task>
-    <option name="localTasksCounter" value="34" />
+    <task id="LOCAL-00034" summary="add recursive join and simple cache">
+      <option name="closed" value="true" />
+      <created>1722326934672</created>
+      <option name="number" value="00034" />
+      <option name="presentableId" value="LOCAL-00034" />
+      <option name="project" value="LOCAL" />
+      <updated>1722326934672</updated>
+    </task>
+    <option name="localTasksCounter" value="35" />
     <servers />
   </component>
   <component name="Vcs.Log.Tabs.Properties">
@@ -357,6 +360,7 @@
     <MESSAGE value="use fi not fName for filter field" />
     <MESSAGE value="fix object class for manyToMany relationship" />
     <MESSAGE value="clean debug print ln" />
-    <option name="LAST_COMMIT_MESSAGE" value="clean debug print ln" />
+    <MESSAGE value="add recursive join and simple cache" />
+    <option name="LAST_COMMIT_MESSAGE" value="add recursive join and simple cache" />
   </component>
 </project>
