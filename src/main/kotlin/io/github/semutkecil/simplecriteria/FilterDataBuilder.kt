@@ -17,8 +17,8 @@ class FilterDataBuilder<T>(private val fd: FilterData, private val cob: Class<T>
 
     fun buildPredicate(root: Root<T>, cq: CriteriaQuery<*>, cb: CriteriaBuilder): Predicate? {
 
-        val fields = cob.declaredFields.toMutableList()
-        fields.addAll(cob.superclass.declaredFields.toMutableList())
+        val fields = SimpleQuery.collectEntityField(cob)//cob.declaredFields.toMutableList()
+//        fields.addAll(cob.superclass.declaredFields.toMutableList())
 
         return if (fd.fi != null && fd.o != null && fd.v != null && fields.any { it.name == fd.fi }) {
             val field = fields.first { it.name == fd.fi }

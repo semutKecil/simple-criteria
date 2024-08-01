@@ -41,22 +41,7 @@ class SimpleQuery<T> private constructor(
         return entityManager.createQuery(applyQuery())
     }
 
-    private fun collectEntityField(entityClass: Class<T>): MutableList<Field> {
-        val listFields = mutableListOf<Field>()
-        listFields.addAll(entityClass.declaredFields.toList())
-        var parent: Class<in T> = entityClass
-        var hasChild = true;
-        while (hasChild) {
-            try {
-                parent = parent.superclass
-                listFields.addAll(parent.declaredFields.toList())
-            } catch (e: Exception) {
-                hasChild = false
-            }
-        }
 
-        return listFields;
-    }
 
     fun count(): Long {
         val cb = entityManager.criteriaBuilder
@@ -294,6 +279,23 @@ class SimpleQuery<T> private constructor(
 
             cacheUpdate[clazz.name] = Instant.now()
         }
+
+        fun <T>collectEntityField(entityClass: Class<T>): MutableList<Field> {
+            val listFields = mutableListOf<Field>()
+            listFields.addAll(entityClass.declaredFields.toList())
+            var parent: Class<in T> = entityClass
+            var hasChild = true;
+            while (hasChild) {
+                try {
+                    parent = parent.superclass
+                    listFields.addAll(parent.declaredFields.toList())
+                } catch (e: Exception) {
+                    hasChild = false
+                }
+            }
+
+            return listFields;
+        }
     }
 
     data class Builder<T>(val em: EntityManager, val clazz: Class<T>) {
@@ -348,10 +350,12 @@ class SimpleQuery<T> private constructor(
                 } else {
                     joinName += ".$fn"
                 }
-
-                var childClass = parentClass.getDeclaredField(fn).type
+SimpleQuery.collectEntityField(parentClass).first{it.name==fn}.type
+//                var childClass = parentClass.getDeclaredField(fn).type
+                var childClass = collectEntityField(parentClass).first{it.name==fn}.type
                 if (MutableCollection::class.java.isAssignableFrom(childClass)) {
-                    val fieldType = parentClass.getDeclaredField(fn).genericType as ParameterizedType
+//                    val fieldType = parentClass.getDeclaredField(fn).genericType as ParameterizedType
+                    val fieldType = collectEntityField(parentClass).first{it.name==fn}.genericType as ParameterizedType
                     childClass = fieldType.actualTypeArguments[0] as Class<*>
                 }
 
