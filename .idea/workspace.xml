@@ -4,10 +4,9 @@
     <option name="autoReloadType" value="SELECTIVE" />
   </component>
   <component name="ChangeListManager">
-    <list default="true" id="9a7b479d-6474-4dc1-9929-fae667616f01" name="Changes" comment="update version to 1.1.11">
+    <list default="true" id="9a7b479d-6474-4dc1-9929-fae667616f01" name="Changes" comment="update to version 1.1.12">
       <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/main/kotlin/io/github/semutkecil/simplecriteria/FilterDataBuilder.kt" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/kotlin/io/github/semutkecil/simplecriteria/FilterDataBuilder.kt" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/main/kotlin/io/github/semutkecil/simplecriteria/JoinObj.kt" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/kotlin/io/github/semutkecil/simplecriteria/JoinObj.kt" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/pom.xml" beforeDir="false" afterPath="$PROJECT_DIR$/pom.xml" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/src/main/kotlin/io/github/semutkecil/simplecriteria/SimpleQuery.kt" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/kotlin/io/github/semutkecil/simplecriteria/SimpleQuery.kt" afterDir="false" />
     </list>
     <option name="SHOW_DIALOG" value="false" />
@@ -333,7 +332,23 @@
       <option name="project" value="LOCAL" />
       <updated>1722327010409</updated>
     </task>
-    <option name="localTasksCounter" value="36" />
+    <task id="LOCAL-00036" summary="fix recursive field search">
+      <option name="closed" value="true" />
+      <created>1722486929952</created>
+      <option name="number" value="00036" />
+      <option name="presentableId" value="LOCAL-00036" />
+      <option name="project" value="LOCAL" />
+      <updated>1722486929952</updated>
+    </task>
+    <task id="LOCAL-00037" summary="update to version 1.1.12">
+      <option name="closed" value="true" />
+      <created>1722486981366</created>
+      <option name="number" value="00037" />
+      <option name="presentableId" value="LOCAL-00037" />
+      <option name="project" value="LOCAL" />
+      <updated>1722486981366</updated>
+    </task>
+    <option name="localTasksCounter" value="38" />
     <servers />
   </component>
   <component name="Vcs.Log.Tabs.Properties">
@@ -348,8 +363,6 @@
     </option>
   </component>
   <component name="VcsManagerConfiguration">
-    <MESSAGE value="initial commit" />
-    <MESSAGE value="fix java lang integer not found in kotlin" />
     <MESSAGE value="update dependency" />
     <MESSAGE value="add string predicate for greater than and less than" />
     <MESSAGE value="merge predicate builder" />
@@ -373,6 +386,8 @@
     <MESSAGE value="clean debug print ln" />
     <MESSAGE value="add recursive join and simple cache" />
     <MESSAGE value="update version to 1.1.11" />
-    <option name="LAST_COMMIT_MESSAGE" value="update version to 1.1.11" />
+    <MESSAGE value="fix recursive field search" />
+    <MESSAGE value="update to version 1.1.12" />
+    <option name="LAST_COMMIT_MESSAGE" value="update to version 1.1.12" />
   </component>
 </project>

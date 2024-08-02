@@ -6,14 +6,9 @@ import jakarta.persistence.TypedQuery
 import jakarta.persistence.criteria.*
 import java.lang.reflect.Field
 import java.lang.reflect.ParameterizedType
-import java.time.Instant
 import java.time.LocalDate
 import java.time.LocalDateTime
 import java.time.LocalTime
-import java.util.concurrent.CompletableFuture
-import java.util.concurrent.ConcurrentHashMap
-import java.util.concurrent.ExecutorService
-import java.util.concurrent.Executors
 
 class SimpleQuery<T> private constructor(
     private val entityManager: EntityManager,
@@ -27,21 +22,11 @@ class SimpleQuery<T> private constructor(
     private val fields = collectEntityField(clazz)
     private val mapSelect = mutableMapOf<String, Path<out Any>>()
 
-    private val cacheKey: CacheKey = CacheKey(
-        clazz.name,
-        select,
-        joins.map { it.key }.toList(),
-        FilterData.and(*filterDataList.toTypedArray()).toJson(),
-        orderList
-    )
-
     enum class DIR { ASC, DESC }
 
     fun createQuery(): TypedQuery<Tuple> {
         return entityManager.createQuery(applyQuery())
     }
-
-
 
     fun count(): Long {
         val cb = entityManager.criteriaBuilder
@@ -62,48 +47,18 @@ class SimpleQuery<T> private constructor(
     }
 
     fun resultListMap(limit: Int? = null, offset: Int = 0): List<Map<String, *>> {
-        cacheKey.limit = limit
-        cacheKey.offset = offset
-        val stringCacheKey = cacheKey.toString()
-        if (isValidCache(cacheKey)) {
-//            println("return cached data")
-            return cacheData[stringCacheKey]!!.data;
+        val query = entityManager.createQuery(applyQuery())
+        query.firstResult = offset
+        if (limit != null) {
+            query.maxResults = limit
         }
-
-        val executor = if (executorMap.contains(cacheKey.toString())) {
-            executorMap[cacheKey.toString()]
-        } else {
-            executorMap.put(cacheKey.toString(), Executors.newSingleThreadExecutor())
-            executorMap[cacheKey.toString()]
+        val slc = select.filter { !it.contains(".") }.toMutableList()
+        slc.addAll(select.filter { it.contains(".") })
+        return query.resultList.map {
+            slc.mapIndexed { idx, str ->
+                Pair(str, it.get(idx))
+            }.toMap()
         }
-        val cv = CompletableFuture<List<Map<String, *>>>()
-        executor!!.execute {
-            try {
-//                println("execute query data")
-                if (isValidCache(cacheKey)) {
-//                    println("return cached data")
-                    cv.complete(cacheData[stringCacheKey]!!.data)
-                    return@execute
-                }
-                val query = entityManager.createQuery(applyQuery())
-                query.firstResult = offset
-                if (limit != null) {
-                    query.maxResults = limit
-                }
-                val slc = select.filter { !it.contains(".") }.toMutableList()
-                slc.addAll(select.filter { it.contains(".") })
-                val res = query.resultList.map {
-                    slc.mapIndexed { idx, str ->
-                        Pair(str, it.get(idx))
-                    }.toMap()
-                }
-                cacheData[stringCacheKey] = DataCache(data = res, created = Instant.now())
-                cv.complete(res)
-            } catch (e: Exception) {
-                throw e
-            }
-        }
-        return cv.get()
     }
 
     private fun applyQuery(): CriteriaQuery<Tuple> {
@@ -187,28 +142,6 @@ class SimpleQuery<T> private constructor(
         return join ?: throw Exception("unregistered join $key. register join with addJoin")
     }
 
-    private fun isValidCache(cacheKey: CacheKey): Boolean {
-        val stringCacheKey = cacheKey.toString()
-        val res = if (cacheData.containsKey(stringCacheKey)) {
-//            println("matching")
-            val data = cacheData[stringCacheKey]
-            if (cacheUpdate.containsKey(cacheKey.className)) {
-//                println("expired check")
-                data!!.created.isAfter(cacheUpdate[cacheKey.className])
-            }
-            true
-        } else {
-            false
-        }
-
-        if (res && executorMap[stringCacheKey]?.isShutdown == false) {
-            executorMap[stringCacheKey]?.shutdown()
-            executorMap.remove(stringCacheKey)
-        }
-
-        return res
-    }
-
     private fun buildPredicateFromFilterData(
         r: Root<*>,
         fd: FilterData,
@@ -271,16 +204,7 @@ class SimpleQuery<T> private constructor(
     }
 
     companion object {
-        //        val singleThreadedExecutor: ExecutorService = Executors.newSingleThreadExecutor()
-        val executorMap: ConcurrentHashMap<String, ExecutorService> = ConcurrentHashMap()
-        val cacheData: ConcurrentHashMap<String, DataCache> = ConcurrentHashMap()
-        private val cacheUpdate = mutableMapOf<String, Instant>()
-        fun <T> reloadCache(clazz: Class<T>) {
-
-            cacheUpdate[clazz.name] = Instant.now()
-        }
-
-        fun <T>collectEntityField(entityClass: Class<T>): MutableList<Field> {
+        fun <T> collectEntityField(entityClass: Class<T>): MutableList<Field> {
             val listFields = mutableListOf<Field>()
             listFields.addAll(entityClass.declaredFields.toList())
             var parent: Class<in T> = entityClass
@@ -350,12 +274,11 @@ class SimpleQuery<T> private constructor(
                 } else {
                     joinName += ".$fn"
                 }
-SimpleQuery.collectEntityField(parentClass).first{it.name==fn}.type
-//                var childClass = parentClass.getDeclaredField(fn).type
-                var childClass = collectEntityField(parentClass).first{it.name==fn}.type
+                collectEntityField(parentClass).first { it.name == fn }.type
+                var childClass = collectEntityField(parentClass).first { it.name == fn }.type
                 if (MutableCollection::class.java.isAssignableFrom(childClass)) {
-//                    val fieldType = parentClass.getDeclaredField(fn).genericType as ParameterizedType
-                    val fieldType = collectEntityField(parentClass).first{it.name==fn}.genericType as ParameterizedType
+                    val fieldType =
+                        collectEntityField(parentClass).first { it.name == fn }.genericType as ParameterizedType
                     childClass = fieldType.actualTypeArguments[0] as Class<*>
                 }
 
