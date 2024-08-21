@@ -5,13 +5,14 @@ import jakarta.persistence.criteria.Expression
 import jakarta.persistence.criteria.From
 import jakarta.persistence.criteria.Predicate
 import java.lang.reflect.Field
-import java.time.*
-import java.time.format.DateTimeFormatter
+import java.time.LocalDate
+import java.time.LocalDateTime
+import java.time.LocalTime
 import java.util.*
 
 class PredicateUtility {
     companion object {
-        private val dateTimeFormatter: DateTimeFormatter = DateTimeFormatter.ofPattern("yyyy-MM-dd HH:mm:ss")
+        //        private val dateTimeFormatter: DateTimeFormatter = DateTimeFormatter.ofPattern("yyyy-MM-dd HH:mm:ss")
         private fun localDatetimePredicate(fd: FilterData, root: From<*, *>, cb: CriteriaBuilder): Predicate? {
 
             /**
@@ -28,32 +29,32 @@ class PredicateUtility {
             return when (fd.o!!) {
                 FilterData.FILTEROP.EQ -> cb.equal(
                     root.get<LocalDateTime>(fd.fi),
-                    LocalDateTime.parse(fd.v!!, dateTimeFormatter)
+                    LocalDateTime.parse(fd.v!!, FilterData.dateTimeFormatter)
                 )
 
                 FilterData.FILTEROP.NEQ -> cb.notEqual(
                     root.get<LocalDateTime>(fd.fi),
-                    LocalDateTime.parse(fd.v!!, dateTimeFormatter)
+                    LocalDateTime.parse(fd.v!!, FilterData.dateTimeFormatter)
                 )
 
                 FilterData.FILTEROP.GT -> cb.greaterThan(
                     root.get(fd.fi),
-                    LocalDateTime.parse(fd.v!!, dateTimeFormatter)
+                    LocalDateTime.parse(fd.v!!, FilterData.dateTimeFormatter)
                 )
 
                 FilterData.FILTEROP.LT -> cb.lessThan(
                     root.get(fd.fi),
-                    LocalDateTime.parse(fd.v!!, dateTimeFormatter)
+                    LocalDateTime.parse(fd.v!!, FilterData.dateTimeFormatter)
                 )
 
                 FilterData.FILTEROP.GE -> cb.greaterThanOrEqualTo(
                     root.get(fd.fi),
-                    LocalDateTime.parse(fd.v!!, dateTimeFormatter)
+                    LocalDateTime.parse(fd.v!!, FilterData.dateTimeFormatter)
                 )
 
                 FilterData.FILTEROP.LE -> cb.lessThanOrEqualTo(
                     root.get(fd.fi),
-                    LocalDateTime.parse(fd.v!!, dateTimeFormatter)
+                    LocalDateTime.parse(fd.v!!, FilterData.dateTimeFormatter)
                 )
 
                 FilterData.FILTEROP.EQD,
@@ -102,32 +103,32 @@ class PredicateUtility {
             return when (fd.o!!) {
                 FilterData.FILTEROP.EQ -> cb.equal(
                     root.get<LocalDate>(fd.fi),
-                    LocalDate.parse(fd.v!!, dateTimeFormatter)
+                    LocalDate.parse(fd.v!!, FilterData.dateTimeFormatter)
                 )
 
                 FilterData.FILTEROP.NEQ -> cb.notEqual(
                     root.get<LocalDate>(fd.fi),
-                    LocalDate.parse(fd.v!!, dateTimeFormatter)
+                    LocalDate.parse(fd.v!!, FilterData.dateTimeFormatter)
                 )
 
                 FilterData.FILTEROP.GT -> cb.greaterThan(
                     root.get(fd.fi),
-                    LocalDate.parse(fd.v!!, dateTimeFormatter)
+                    LocalDate.parse(fd.v!!, FilterData.dateTimeFormatter)
                 )
 
                 FilterData.FILTEROP.LT -> cb.lessThan(
                     root.get(fd.fi),
-                    LocalDate.parse(fd.v!!, dateTimeFormatter)
+                    LocalDate.parse(fd.v!!, FilterData.dateTimeFormatter)
                 )
 
                 FilterData.FILTEROP.GE -> cb.greaterThanOrEqualTo(
                     root.get(fd.fi),
-                    LocalDate.parse(fd.v!!, dateTimeFormatter)
+                    LocalDate.parse(fd.v!!, FilterData.dateTimeFormatter)
                 )
 
                 FilterData.FILTEROP.LE -> cb.lessThanOrEqualTo(
                     root.get(fd.fi),
-                    LocalDate.parse(fd.v!!, dateTimeFormatter)
+                    LocalDate.parse(fd.v!!, FilterData.dateTimeFormatter)
                 )
 
                 FilterData.FILTEROP.EQD,
@@ -157,32 +158,32 @@ class PredicateUtility {
             return when (fd.o!!) {
                 FilterData.FILTEROP.EQ -> cb.equal(
                     root.get<LocalTime>(fd.fi),
-                    LocalTime.parse(fd.v!!, dateTimeFormatter)
+                    LocalTime.parse(fd.v!!, FilterData.dateTimeFormatter)
                 )
 
                 FilterData.FILTEROP.NEQ -> cb.notEqual(
                     root.get<LocalTime>(fd.fi),
-                    LocalTime.parse(fd.v!!, dateTimeFormatter)
+                    LocalTime.parse(fd.v!!, FilterData.dateTimeFormatter)
                 )
 
                 FilterData.FILTEROP.GT -> cb.greaterThan(
                     root.get(fd.fi),
-                    LocalTime.parse(fd.v!!, dateTimeFormatter)
+                    LocalTime.parse(fd.v!!, FilterData.dateTimeFormatter)
                 )
 
                 FilterData.FILTEROP.LT -> cb.lessThan(
                     root.get(fd.fi),
-                    LocalTime.parse(fd.v!!, dateTimeFormatter)
+                    LocalTime.parse(fd.v!!, FilterData.dateTimeFormatter)
                 )
 
                 FilterData.FILTEROP.GE -> cb.greaterThanOrEqualTo(
                     root.get(fd.fi),
-                    LocalTime.parse(fd.v!!, dateTimeFormatter)
+                    LocalTime.parse(fd.v!!, FilterData.dateTimeFormatter)
                 )
 
                 FilterData.FILTEROP.LE -> cb.lessThanOrEqualTo(
                     root.get(fd.fi),
-                    LocalTime.parse(fd.v!!, dateTimeFormatter)
+                    LocalTime.parse(fd.v!!, FilterData.dateTimeFormatter)
                 )
 
                 FilterData.FILTEROP.EQT,
@@ -268,7 +269,7 @@ class PredicateUtility {
                             Boolean::class.java -> cb.equal(root.get<Boolean>(fd.fName), fd.v!!.toBoolean())
                             LocalDateTime::class.java -> cb.equal(
                                 root.get<LocalDateTime>(fd.fName),
-                                LocalDateTime.parse(fd.v!!, dateTimeFormatter)
+                                LocalDateTime.parse(fd.v!!, FilterData.dateTimeFormatter)
                             )
 
                             String::class.java -> cb.equal(
@@ -291,7 +292,7 @@ class PredicateUtility {
                             Boolean::class.java -> cb.notEqual(root.get<Boolean>(fd.fName), fd.v!!.toBoolean())
                             LocalDateTime::class.java -> cb.notEqual(
                                 root.get<LocalDateTime>(fd.fName),
-                                LocalDateTime.parse(fd.v!!, dateTimeFormatter)
+                                LocalDateTime.parse(fd.v!!, FilterData.dateTimeFormatter)
                             )
 
                             String::class.java -> cb.notEqual(

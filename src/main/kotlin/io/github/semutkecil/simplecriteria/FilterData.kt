@@ -2,6 +2,7 @@ package io.github.semutkecil.simplecriteria
 
 import com.fasterxml.jackson.module.kotlin.jacksonObjectMapper
 import java.io.Serializable
+import java.time.format.DateTimeFormatter
 
 
 class FilterData : Serializable {
@@ -54,6 +55,8 @@ class FilterData : Serializable {
     }
 
     companion object {
+        var dateTimeFormatter: DateTimeFormatter = DateTimeFormatter.ofPattern("yyyy-MM-dd HH:mm:ss")
+
         fun fromJson(json: String): FilterData {
             val jsonMapper = jacksonObjectMapper()
             return jsonMapper.readValue(json, FilterData::class.java)
