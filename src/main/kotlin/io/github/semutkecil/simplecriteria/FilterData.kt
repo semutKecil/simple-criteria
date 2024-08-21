@@ -4,7 +4,6 @@ import com.fasterxml.jackson.module.kotlin.jacksonObjectMapper
 import java.io.Serializable
 import java.time.format.DateTimeFormatter
 
-
 class FilterData : Serializable {
     var fi: String? = null
     var v: String? = null
