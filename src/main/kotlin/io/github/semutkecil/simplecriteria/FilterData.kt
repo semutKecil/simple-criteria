@@ -1,6 +1,7 @@
 package io.github.semutkecil.simplecriteria
 
 import com.fasterxml.jackson.module.kotlin.jacksonObjectMapper
+import org.springframework.data.jpa.domain.Specification
 import java.io.Serializable
 import java.time.format.DateTimeFormatter
 
@@ -53,6 +54,12 @@ class FilterData : Serializable {
         }
     }
 
+    fun <T>toSpec(clazz:Class<T>){
+        val spec = Specification<T> { r, cq, cb ->
+            FilterDataBuilder(this, clazz).buildPredicate(r, cq, cb)
+        }
+    }
+
     companion object {
         var dateTimeFormatter: DateTimeFormatter = DateTimeFormatter.ofPattern("yyyy-MM-dd HH:mm:ss")
 
@@ -78,6 +85,8 @@ class FilterData : Serializable {
             fd.or = filterData.map { it }.toTypedArray()
             return fd
         }
+
+
     }
 
     enum class FILTEROP {
