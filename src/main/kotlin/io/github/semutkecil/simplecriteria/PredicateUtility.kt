@@ -312,8 +312,19 @@ class PredicateUtility {
 
                 FilterData.FILTEROP.LIKEREV -> cb.like(
                     cb.literal(fd.v!!.lowercase(Locale.getDefault())),
-                    cb.lower(root.get<String>(fd.fName).`as`(String::class.java))
+                    cb.concat("%", cb.concat(cb.lower(root.get<String>(fd.fName).`as`(String::class.java)), "%"))
 
+
+                )
+
+                FilterData.FILTEROP.LIKEREVSTART -> cb.like(
+                    cb.literal(fd.v!!.lowercase(Locale.getDefault())),
+                    cb.concat(cb.lower(root.get<String>(fd.fName).`as`(String::class.java)), "%")
+                )
+
+                FilterData.FILTEROP.LIKEREVEND -> cb.like(
+                    cb.literal(fd.v!!.lowercase(Locale.getDefault())),
+                    cb.concat("%", cb.lower(root.get<String>(fd.fName).`as`(String::class.java)))
                 )
 
                 FilterData.FILTEROP.ISNULL -> cb.isNull(root.get<Any>(fd.fName))

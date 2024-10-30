@@ -114,5 +114,7 @@ class FilterData : Serializable {
         IN,
         NOTIN,
         LIKEREV,
+        LIKEREVSTART,
+        LIKEREVEND,
     }
 }
