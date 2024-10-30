@@ -113,5 +113,6 @@ class FilterData : Serializable {
         ISNOTNULL,
         IN,
         NOTIN,
+        LIKEREV,
     }
 }

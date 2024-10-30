@@ -310,6 +310,12 @@ class PredicateUtility {
                     fd.v!!.lowercase(Locale.getDefault())
                 )
 
+                FilterData.FILTEROP.LIKEREV -> cb.like(
+                    cb.literal(fd.v!!.lowercase(Locale.getDefault())),
+                    cb.lower(root.get<String>(fd.fName).`as`(String::class.java))
+
+                )
+
                 FilterData.FILTEROP.ISNULL -> cb.isNull(root.get<Any>(fd.fName))
                 FilterData.FILTEROP.ISNOTNULL -> cb.isNotNull(root.get<Any>(fd.fName))
                 FilterData.FILTEROP.IN -> {
