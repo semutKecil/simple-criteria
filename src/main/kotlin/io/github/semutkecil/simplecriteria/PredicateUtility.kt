@@ -253,11 +253,17 @@ class PredicateUtility {
             }
         }
 
+        fun escape(data:String?):String?{
+            return data?.replace("\\","\\\\")?.replace("\"","\\\"")
+        }
+
         fun generatePredicate(
             root: From<*, *>, cb: CriteriaBuilder,
             fd: FilterData,
             field: Field,
         ): Predicate? {
+            fd.v = escape(fd.v)
+            fd.vAr = fd.vAr?.map { escape(it)!! }?.toTypedArray()
             return when (fd.o) {
                 FilterData.FILTEROP.EQ -> {
                     if (field.type.isEnum) {
