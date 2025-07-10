@@ -145,11 +145,17 @@ class SimpleQuery<T> private constructor(
         return join ?: throw Exception("unregistered join $key. register join with addJoin")
     }
 
+    fun escape(data:String?):String? {
+        return data?.replace("\\","\\\\")?.replace("\"","\\\"")
+    }
+
     private fun buildPredicateFromFilterData(
         r: Root<*>,
         fd: FilterData,
         mapJoinObj: MutableMap<String, JoinObj<*>>
     ): Predicate? {
+        fd.v = escape(fd.v)
+        fd.vAr = fd.vAr?.map { escape(it)!! }?.toTypedArray()
         return if (fd.and?.isNotEmpty() == true) {
             fd.and?.map { d -> buildPredicateFromFilterData(r, d, mapJoinObj) }?.let { p ->
                 cb.and(*p.toTypedArray())
