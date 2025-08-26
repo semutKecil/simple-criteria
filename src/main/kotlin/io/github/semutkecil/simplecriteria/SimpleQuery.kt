@@ -46,6 +46,12 @@ class SimpleQuery<T> private constructor(
         return resultListMap(limit = 1).firstOrNull()
     }
 
+//    fun resultCount(): Long? {
+//        println("using count")
+//        val query = entityManager.createQuery(countQuery())
+//        return query.singleResult
+//    }
+
     fun resultListMap(limit: Int? = null, offset: Int = 0): List<Map<String, *>> {
         val query = entityManager.createQuery(applyQuery())
         query.firstResult = offset
@@ -60,6 +66,18 @@ class SimpleQuery<T> private constructor(
             }.toMap()
         }
     }
+
+//    private fun countQuery(): CriteriaQuery<Long> {
+//        val q = cb.createQuery(Long::class.java)
+//        val r = q.from(clazz)
+//        q.select(cb.count(r))
+//
+//        val prList = filterDataList.mapNotNull { buildPredicateFromFilterData(r, it, mapJoinObj) }
+//        if (prList.isNotEmpty()) {
+//            q.where(cb.and(*prList.toTypedArray()))
+//        }
+//        return q
+//    }
 
     private fun applyQuery(): CriteriaQuery<Tuple> {
         val q = cb.createTupleQuery()
@@ -78,6 +96,7 @@ class SimpleQuery<T> private constructor(
             val field = j.fields.first { fl -> fl.name == cn }
             mapSelect[it] = getPredicate(cn, j.join, field.type)
         }
+
 
         q.multiselect(*mapSelect.values.toTypedArray())
 
@@ -243,29 +262,31 @@ class SimpleQuery<T> private constructor(
         private fun <X, Y> addJoinLv1(
             name: String,
             clazzParent: Class<X>,
-            clazzJoin: Class<Y>
+            clazzJoin: Class<Y>,
+            type: JoinType
         ) = apply {
             addJoin(name, clazzJoin) { r, _ ->
-                r.join<X, Y>(name, JoinType.LEFT)
+                r.join<X, Y>(name, type)
             }
         }
 
         private fun <X, Y> addJoinLvUp(
             name: String,
             clazzParent: Class<X>,
-            clazzJoin: Class<Y>
+            clazzJoin: Class<Y>,
+            type: JoinType
         ) = apply {
             addJoin(name, clazzJoin) { _, m ->
                 val nameSplit = name.split(".")
                 m[nameSplit.take(nameSplit.size - 1).joinToString(".")]?.join?.join<X, Y>(
                     nameSplit.last(),
-                    JoinType.LEFT
+                    type
                 )
                     ?: throw Exception("join not found")
             }
         }
 
-        private fun addJoin(splName: List<String>) {
+        private fun addJoin(splName: List<String>, type: JoinType = JoinType.LEFT) {
             var parentClass: Class<*> = clazz
             var joinName = ""
             splName.forEachIndexed { i, fn ->
@@ -284,9 +305,9 @@ class SimpleQuery<T> private constructor(
 
                 if (joins[joinName] == null) {
                     if (i == 0) {
-                        addJoinLv1(joinName, parentClass, childClass)
+                        addJoinLv1(joinName, parentClass, childClass, type)
                     } else {
-                        addJoinLvUp(joinName, parentClass, childClass)
+                        addJoinLvUp(joinName, parentClass, childClass, type)
                     }
                 }
                 parentClass = childClass
@@ -333,6 +354,14 @@ class SimpleQuery<T> private constructor(
         }
 
         fun build(): SimpleQuery<T> {
+            filterDataList.forEach { f ->
+                val flattenF = f.flattenField()
+                flattenF.filter { it.contains(".") }.forEach {
+                    val jSplit = it.split(".")
+                    addJoin(jSplit.take(jSplit.size - 1), JoinType.LEFT)
+                }
+            }
+
             select.filter { it.contains(".") }.forEach {
                 val jSplit = it.split(".")
                 addJoin(jSplit.take(jSplit.size - 1))
@@ -343,13 +372,7 @@ class SimpleQuery<T> private constructor(
                 addJoin(jSplit.take(jSplit.size - 1))
             }
 
-            filterDataList.forEach { f ->
-                val flattenF = f.flattenField()
-                flattenF.filter { it.contains(".") }.forEach {
-                    val jSplit = it.split(".")
-                    addJoin(jSplit.take(jSplit.size - 1))
-                }
-            }
+
 
             return SimpleQuery(em, clazz, select, joins, filterDataList, orderList)
         }

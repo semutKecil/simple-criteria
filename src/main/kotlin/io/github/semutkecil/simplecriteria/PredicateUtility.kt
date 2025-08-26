@@ -25,6 +25,11 @@ class PredicateUtility {
             Expression<Integer> second = cb.function("second", Integer.class, ts);
              */
 
+            fun castDate(): Expression<LocalDate?>? {
+                return root.get<LocalDateTime>(fd.fi).`as`(LocalDate::class.java)
+            }
+//            val castDate =
+
 
             return when (fd.o!!) {
                 FilterData.FILTEROP.EQ -> cb.equal(
@@ -57,22 +62,49 @@ class PredicateUtility {
                     LocalDateTime.parse(fd.v!!, FilterData.dateTimeFormatter)
                 )
 
-                FilterData.FILTEROP.EQD,
-                FilterData.FILTEROP.LED,
-                FilterData.FILTEROP.GED,
-                FilterData.FILTEROP.LTD,
-                FilterData.FILTEROP.GTD,
-                FilterData.FILTEROP.NEQD -> {
-                    val intDateExp = cb.sum(
-                        cb.sum(
-                            cb.prod(cb.function("year", Integer::class.java, root.get<LocalDateTime>(fd.fi)), 10000),
-                            cb.prod(cb.function("month", Integer::class.java, root.get<LocalDateTime>(fd.fi)), 100)
-                        ), cb.function("day", Integer::class.java, root.get<LocalDateTime>(fd.fi))
-                    )
-                    numberPredicate(
-                        intDateExp, fd.o!!, fd.v!!.replace("-", "").toInt(), cb
-                    )
-                }
+                FilterData.FILTEROP.EQD -> cb.equal(
+                    castDate(),
+                    LocalDate.parse(fd.v!!, FilterData.dateFormater)
+                )
+
+                FilterData.FILTEROP.LED -> cb.lessThanOrEqualTo(
+                    castDate(),
+                    LocalDate.parse(fd.v!!, FilterData.dateFormater)
+                )
+
+                FilterData.FILTEROP.GED -> cb.greaterThanOrEqualTo(
+                    castDate(),
+                    LocalDate.parse(fd.v!!, FilterData.dateFormater)
+                )
+
+                FilterData.FILTEROP.LTD -> cb.lessThan(
+                    castDate(),
+                    LocalDate.parse(fd.v!!, FilterData.dateFormater)
+                )
+
+                FilterData.FILTEROP.GTD -> cb.greaterThan(
+                    castDate(),
+                    LocalDate.parse(fd.v!!, FilterData.dateFormater)
+                )
+
+                FilterData.FILTEROP.NEQD -> cb.notEqual(
+                    castDate(),
+                    LocalDate.parse(fd.v!!, FilterData.dateFormater)
+                )
+
+//                    {
+//
+//
+//                    val intDateExp = cb.sum(
+//                        cb.sum(
+//                            cb.prod(cb.function("year", Integer::class.java, root.get<LocalDateTime>(fd.fi)), 10000),
+//                            cb.prod(cb.function("month", Integer::class.java, root.get<LocalDateTime>(fd.fi)), 100)
+//                        ), cb.function("day", Integer::class.java, root.get<LocalDateTime>(fd.fi))
+//                    )
+//                    numberPredicate(
+//                        intDateExp, fd.o!!, fd.v!!.replace("-", "").toInt(), cb
+//                    )
+//                }
 
                 FilterData.FILTEROP.EQT,
                 FilterData.FILTEROP.LET,
@@ -253,17 +285,11 @@ class PredicateUtility {
             }
         }
 
-        fun escape(data:String?):String?{
-            return data?.replace("\\","\\\\")?.replace("\"","\\\"")
-        }
-
         fun generatePredicate(
             root: From<*, *>, cb: CriteriaBuilder,
             fd: FilterData,
             field: Field,
         ): Predicate? {
-            fd.v = escape(fd.v)
-            fd.vAr = fd.vAr?.map { escape(it)!! }?.toTypedArray()
             return when (fd.o) {
                 FilterData.FILTEROP.EQ -> {
                     if (field.type.isEnum) {

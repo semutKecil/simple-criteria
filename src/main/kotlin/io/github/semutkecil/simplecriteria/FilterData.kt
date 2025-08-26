@@ -62,7 +62,7 @@ class FilterData : Serializable {
 
     companion object {
         var dateTimeFormatter: DateTimeFormatter = DateTimeFormatter.ofPattern("yyyy-MM-dd HH:mm:ss")
-
+        var dateFormater: DateTimeFormatter = DateTimeFormatter.ofPattern("yyyy-MM-dd")
         fun fromJson(json: String): FilterData {
             val jsonMapper = jacksonObjectMapper()
             return jsonMapper.readValue(json, FilterData::class.java)
