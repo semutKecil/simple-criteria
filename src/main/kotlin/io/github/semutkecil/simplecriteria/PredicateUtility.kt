@@ -314,6 +314,29 @@ class PredicateUtility {
                     }
                 }
 
+                FilterData.FILTEROP.EQS -> {
+                    if (field.type.isEnum) {
+                        cb.equal(
+                            root.get<Enum<*>>(fd.fName),
+                            field.type.enumConstants.first { any -> any.toString() == fd.v!! })
+                    } else {
+                        when (field.type) {
+                            Boolean::class.java -> cb.equal(root.get<Boolean>(fd.fName), fd.v!!.toBoolean())
+                            LocalDateTime::class.java -> cb.equal(
+                                root.get<LocalDateTime>(fd.fName),
+                                LocalDateTime.parse(fd.v!!, FilterData.dateTimeFormatter)
+                            )
+
+                            String::class.java -> cb.equal(
+                                root.get<String>(fd.fName),
+                                fd.v!!
+                            )
+
+                            else -> cb.equal(root.get<Any>(fd.fName), fd.v)
+                        }
+                    }
+                }
+
                 FilterData.FILTEROP.NEQ -> {
                     if (field.type.isEnum) {
                         cb.notEqual(
@@ -337,9 +360,37 @@ class PredicateUtility {
                     }
                 }
 
+                FilterData.FILTEROP.NEQS -> {
+                    if (field.type.isEnum) {
+                        cb.notEqual(
+                            root.get<Enum<*>>(fd.fName),
+                            field.type.enumConstants.first { any -> any.toString() == fd.v!! })
+                    } else {
+                        when (field.type) {
+                            Boolean::class.java -> cb.notEqual(root.get<Boolean>(fd.fName), fd.v!!.toBoolean())
+                            LocalDateTime::class.java -> cb.notEqual(
+                                root.get<LocalDateTime>(fd.fName),
+                                LocalDateTime.parse(fd.v!!, FilterData.dateTimeFormatter)
+                            )
+
+                            String::class.java -> cb.notEqual(
+                                root.get<String>(fd.fName),
+                                fd.v!!
+                            )
+
+                            else -> cb.notEqual(root.get<Any>(fd.fName), fd.v)
+                        }
+                    }
+                }
+
                 FilterData.FILTEROP.LIKE -> cb.like(
                     cb.lower(root.get<String>(fd.fName).`as`(String::class.java)),
                     fd.v!!.lowercase(Locale.getDefault())
+                )
+
+                FilterData.FILTEROP.LIKES -> cb.like(
+                    root.get(fd.fName),
+                    fd.v!!
                 )
 
                 FilterData.FILTEROP.LIKEREV -> cb.like(

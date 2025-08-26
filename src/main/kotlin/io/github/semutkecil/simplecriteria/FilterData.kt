@@ -116,5 +116,8 @@ class FilterData : Serializable {
         LIKEREV,
         LIKEREVSTART,
         LIKEREVEND,
+        EQS,
+        NEQS,
+        LIKES
     }
 }
