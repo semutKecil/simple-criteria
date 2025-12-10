@@ -54,7 +54,7 @@ class FilterData : Serializable {
         }
     }
 
-    fun <T> toSpec(clazz: Class<T>): Specification<T> {
+    fun <T:Any> toSpec(clazz: Class<T>): Specification<T> {
         return Specification<T> { r, cq, cb ->
             FilterDataBuilder(this, clazz).buildPredicate(r, cq, cb)
         }
